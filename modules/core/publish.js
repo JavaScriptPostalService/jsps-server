@@ -23,6 +23,7 @@ const publish = function(payload, channels) {
               message: data,
               metadata: {
                 time,
+                type: 'publish',
                 sender: commonName
               }
             })

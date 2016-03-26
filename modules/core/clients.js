@@ -23,6 +23,7 @@ const clients = function(payload, channels) {
               clients: clients,
               metadata: {
                 time: Date.now(),
+                type: 'clients',
                 requester: payload.metadata.commonName
               }
             })
