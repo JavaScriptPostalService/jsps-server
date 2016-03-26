@@ -16,16 +16,23 @@ app.ws.use(route.all('/', function* (next) {
   this.websocket.on('message', data => {
     let message = JSON.parse(data);
     switch (message.metadata.type) {
+      // If a channel doesn't exist, one will be created. If a privateKey is
+      // provided this will need to be passed to all publishers.
       case 'subscribe':
         subscribe(message.channel, {
           client: message.metadata.client,
-          privateKey: (message.privateKey) ? message.privateKey : false,
+          commonName: (message.metadata.commonName) ?
+            message.metadata.commonName : 'Anonymous',
+          privateKey: (message.privateKey) ?
+            message.privateKey : false,
           socket: this.websocket
         }, channels, nch => {
           channels = Object.assign({}, channels, nch);
         });
         break;
 
+      // TODO: make this actually work.
+      // Leave a channel.
       case 'unsubscribe':
         unsubscribe(message.channel, {
           client: message.metadata.client,
@@ -35,6 +42,8 @@ app.ws.use(route.all('/', function* (next) {
         });
         break;
 
+      // If a channel doesn't exist, nothing will be published. If a privateKey
+      // is provided this will need to be passed to all publishers.
       case 'publish':
         publish(message, channels);
         break;

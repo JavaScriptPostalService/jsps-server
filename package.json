@@ -1,7 +1,7 @@
 {
-  "name": "freesub-server",
+  "name": "jsps-server",
   "version": "0.0.1",
-  "description": "Free pubsub server",
+  "description": "JavaScript Postal Service - Free, and simple to use JavaScript messaging for building realtime applications.",
   "main": "freesub.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,7 +11,10 @@
     "type": "git",
     "url": "https://github.com/wski/freesub-server.git"
   },
-  "author": "",
+  "authors": [
+    "wski <contact.mattdylan@gmail.com>",
+    "hoganmaps <chris@hogan.io>"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/wski/freesub-server/issues"

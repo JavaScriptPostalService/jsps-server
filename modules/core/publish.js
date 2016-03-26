@@ -6,6 +6,7 @@ const publish = function(payload, channels) {
   let privateKey = payload.privateKey;
   let data = payload.payload;
   let client = payload.metadata.client;
+  let commonName = payload.metadata.commonName;
   let time = payload.metadata.time;
 
   let next = () => {
@@ -21,7 +22,8 @@ const publish = function(payload, channels) {
               channel,
               message: data,
               metadata: {
-                time
+                time,
+                sender: commonName
               }
             })
           );

@@ -21,6 +21,7 @@ const subscribe = function(channel, payload, channels, cb) {
       nch[channel].subscribers[payload.client] = {
         online: true,
         status: 'active',
+        commonName: payload.metadata.commonName,
         socket: payload.socket
       };
 
@@ -30,6 +31,7 @@ const subscribe = function(channel, payload, channels, cb) {
     nch[channel].subscribers[payload.client] = {
       online: true,
       status: 'active',
+      commonName: payload.metadata.commonName,
       socket: payload.socket
     };
 
