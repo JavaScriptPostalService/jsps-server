@@ -4,6 +4,17 @@
 const subscribe = function(channel, payload, channels, cb) {
   let nch = channels;
 
+  let dispatcher = () => {
+    nch[channel].subscribers[payload.client] = {
+      online: true,
+      status: 'active',
+      commonName: payload.commonName,
+      socket: payload.socket
+    };
+
+    cb(nch);
+  };
+
   if (payload.privateKey && !nch[channel]) {
     nch[channel] = {
       privateKey: payload.privateKey,
@@ -18,24 +29,10 @@ const subscribe = function(channel, payload, channels, cb) {
 
   if (nch[channel].privateKey) {
     if (payload.privateKey === nch[channel].privateKey) {
-      nch[channel].subscribers[payload.client] = {
-        online: true,
-        status: 'active',
-        commonName: payload.metadata.commonName,
-        socket: payload.socket
-      };
-
-      cb(nch);
+      dispatcher();
     }
   } else {
-    nch[channel].subscribers[payload.client] = {
-      online: true,
-      status: 'active',
-      commonName: payload.metadata.commonName,
-      socket: payload.socket
-    };
-
-    cb(nch);
+    dispatcher();
   }
 
   // TODO: make this actually remove the subscriber when the connection is terminated.
