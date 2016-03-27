@@ -8,29 +8,31 @@ const clients = function(payload, channels) {
     let ch = channels[payload.channel];
 
     Object.keys(ch.subscribers).map((value, index) => {
-      try {
-        // Let's push this client to the clients list, along with the status.
-        clients.push({
-          commonName: ch.subscribers[value].commonName,
-          status: ch.subscribers[value].status
-        });
-        // If we're at the end of the online users list, send it back to the
-        // requeuster with the channel requested.
-        if (index + 1  === Object.keys(ch.subscribers).length) {
-          ch.subscribers[payload.metadata.client].socket.send(
-            sender({
-              channel: payload.channel,
-              clients: clients,
-              metadata: {
-                time: Date.now(),
-                type: 'clients',
-                requester: payload.metadata.commonName
-              }
-            })
-          );
+      if (!ch.subscribers[value].silent) {
+        try {
+          // Let's push this client to the clients list, along with the status.
+          clients.push({
+            commonName: ch.subscribers[value].commonName,
+            status: ch.subscribers[value].status
+          });
+          // If we're at the end of the online users list, send it back to the
+          // requeuster with the channel requested.
+          if (index + 1  === Object.keys(ch.subscribers).length) {
+            ch.subscribers[payload.metadata.client].socket.send(
+              sender({
+                channel: payload.channel,
+                clients: clients,
+                metadata: {
+                  time: Date.now(),
+                  type: 'clients',
+                  requester: payload.metadata.commonName
+                }
+              })
+            );
+          }
+        } catch(e) {
+          console.warn(e);
         }
-      } catch(e) {
-        console.warn(e);
       }
     });
   };

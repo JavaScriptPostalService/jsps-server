@@ -10,6 +10,7 @@ const subscribe = function(channel, payload, channels, cb) {
       status: 'active',
       commonName: payload.commonName,
       noself: (payload.noself) ? payload.noself : false,
+      silent: (payload.silent) ? payload.silent : false,
       socket: payload.socket
     };
 

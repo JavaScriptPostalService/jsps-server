@@ -24,17 +24,19 @@ const publish = function(payload, channels) {
           if (ch.subscribers[value].noself && client === value) {
             // Looks like we're setup to ignore payloads sent by ourselves.
           } else {
-            ch.subscribers[value].socket.send(
-              sender({
-                channel,
-                message: data,
-                metadata: {
-                  time,
-                  type: 'publish',
-                  sender: commonName
-                }
-              })
-            );
+            if (!ch.subscribers[value].silent) {
+              ch.subscribers[value].socket.send(
+                sender({
+                  channel,
+                  message: data,
+                  metadata: {
+                    time,
+                    type: 'publish',
+                    sender: commonName
+                  }
+                })
+              );
+            }
           }
         }
       } catch(e) {
