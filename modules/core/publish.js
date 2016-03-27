@@ -1,5 +1,5 @@
 'use strict';
-const sender = require('./sender');
+const {sender} = require('../tools');
 const {logger} = require('../persistence');
 
 const publish = function(payload, channels) {
@@ -21,17 +21,21 @@ const publish = function(payload, channels) {
       // subscribers list.
       try {
         if (ch.subscribers[value].online) {
-          ch.subscribers[value].socket.send(
-            sender({
-              channel,
-              message: data,
-              metadata: {
-                time,
-                type: 'publish',
-                sender: commonName
-              }
-            })
-          );
+          if (ch.subscribers[value].noself && client === value) {
+            // Looks like we're setup to ignore payloads sent by ourselves.
+          } else {
+            ch.subscribers[value].socket.send(
+              sender({
+                channel,
+                message: data,
+                metadata: {
+                  time,
+                  type: 'publish',
+                  sender: commonName
+                }
+              })
+            );
+          }
         }
       } catch(e) {
         console.warn(e);

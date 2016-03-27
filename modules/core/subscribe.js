@@ -9,6 +9,7 @@ const subscribe = function(channel, payload, channels, cb) {
       online: true,
       status: 'active',
       commonName: payload.commonName,
+      noself: (payload.noself) ? payload.noself : false,
       socket: payload.socket
     };
 
@@ -25,7 +26,6 @@ const subscribe = function(channel, payload, channels, cb) {
       subscribers: {}
     };
   }
-
 
   if (nch[channel].privateKey) {
     if (payload.privateKey === nch[channel].privateKey) {

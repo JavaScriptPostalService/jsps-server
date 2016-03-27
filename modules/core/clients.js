@@ -1,6 +1,6 @@
 'use strict';
 
-const sender = require('./sender');
+const {sender} = require('../tools');
 
 const clients = function(payload, channels) {
   let dispatcher = () => {
