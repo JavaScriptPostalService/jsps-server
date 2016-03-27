@@ -4,8 +4,7 @@
 const unsubscribe = function(channel, payload, channels, cb) {
   let nch = channels;
   if (nch[channel]) {
-    nch[channel].subscribers[payload.client].online = false;
-    nch[channel].subscribers[payload.client].online = 'offline';
+    delete nch[channel].subscribers[payload.client];
     cb(nch);
   }
 };

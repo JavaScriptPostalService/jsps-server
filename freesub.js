@@ -6,7 +6,7 @@ const websockify = require('koa-websocket');
 
 const app = websockify(koa());
 
-const {sender, publish, subscribe, clients} = require('./modules/core');
+const {sender, publish, subscribe, unsubscribe, clients} = require('./modules/core');
 
 // TODO: make this bettar
 let channels = {};

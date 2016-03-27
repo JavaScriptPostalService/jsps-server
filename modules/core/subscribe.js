@@ -37,6 +37,7 @@ const subscribe = function(channel, payload, channels, cb) {
 
   // TODO: make this actually remove the subscriber when the connection is terminated.
   payload.socket.onclose(() => {
+    conosle.log('closed');
     nch[channel].subscribers[payload.client].online = false;
     nch[channel].subscribers[payload.client].online = 'offline';
     cb(nch);
