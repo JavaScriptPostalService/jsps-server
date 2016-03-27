@@ -1,5 +1,6 @@
 'use strict';
 const sender = require('./sender');
+const {logger} = require('../persistance');
 
 const publish = function(payload, channels) {
   let channel = payload.channel;
@@ -8,6 +9,9 @@ const publish = function(payload, channels) {
   let client = payload.metadata.client;
   let commonName = payload.metadata.commonName;
   let time = payload.metadata.time;
+
+  // persistance
+  logger(channel, payload);
 
   let next = () => {
     let ch = channels[channel];
