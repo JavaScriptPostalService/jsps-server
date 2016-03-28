@@ -1,2 +1,3 @@
-# freesub-server
-Free PubSub aas
+# catsnake-server
+
+for docs, check catsnake-client

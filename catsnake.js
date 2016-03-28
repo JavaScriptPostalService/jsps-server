@@ -6,7 +6,7 @@ const websockify = require('koa-websocket');
 
 const app = websockify(koa());
 
-const {sender, publish, subscribe, unsubscribe, clients} = require('./modules/core');
+const {sender, publish, subscribe, unsubscribe, info} = require('./modules/core');
 
 // TODO: make this bettar
 let channels = {};
@@ -48,8 +48,8 @@ app.ws.use(route.all('/', function* (next) {
         publish(message, channels);
         break;
 
-      case 'clients':
-        clients(message, channels);
+      case 'info':
+        info(message, channels);
         break;
 
       default:

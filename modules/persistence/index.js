@@ -1,9 +1,9 @@
 'use strict';
 
-const fetch = require('./fetch');
-const logger = require('./logger');
+const history = require('./history');
+const writeHistory = require('./writeHistory');
 
 module.exports = {
-  fetch,
-  logger
+  history,
+  writeHistory
 };
