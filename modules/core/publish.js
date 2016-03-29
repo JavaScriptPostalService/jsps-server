@@ -1,6 +1,6 @@
 'use strict';
 const {sender} = require('../tools');
-const {logger} = require('../persistence');
+const {writeHistory} = require('../persistence');
 
 const publish = function(payload, channels) {
   let channel = payload.channel;
@@ -11,7 +11,7 @@ const publish = function(payload, channels) {
   let time = payload.metadata.time;
 
   // persistence
-  logger(channel, payload);
+  writeHistory(channel, payload);
 
   let next = () => {
     let ch = channels[channel];

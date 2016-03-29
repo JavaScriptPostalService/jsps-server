@@ -52,6 +52,10 @@ app.ws.use(route.all('/', function* (next) {
         info(message, channels);
         break;
 
+      case 'history':
+        console.log('got history', message);
+        break;
+
       default:
 
         break;
