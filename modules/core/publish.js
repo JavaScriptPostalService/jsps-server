@@ -2,6 +2,12 @@
 const {sender} = require('../tools');
 const {writeHistory} = require('../persistence');
 
+/**
+ * Publishes a payload to all subscribers
+ * @function publish
+ * @param {object} payload - the payload to publish to subscribers
+ * @param {channels} object - List of all channels
+*/
 const publish = function(payload, channels) {
   let channel = payload.channel;
   let privateKey = payload.privateKey;
@@ -11,7 +17,7 @@ const publish = function(payload, channels) {
   let time = payload.metadata.time;
 
   // persistence
-  writeHistory(channel, payload);
+  writeHistory(channel, payload, privateKey);
 
   let next = () => {
     let ch = channels[channel];

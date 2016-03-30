@@ -1,6 +1,13 @@
 'use strict';
 
-// Save the connected socket to the subscribers under the channel with the key of client
+/**
+ * Unsubscribe from a channel or ~group~
+ * @function unsubscribe
+ * @param {string} channel - the channel to unsubscribe from
+ * @param {object} payload - the payload containing subscription info
+ * @param {channels} object - List of all channels
+ * @callback {function} cb - callback to send confirmation to
+*/
 const unsubscribe = function(channel, payload, channels, cb) {
   let nch = channels;
   if (nch[channel]) {

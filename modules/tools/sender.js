@@ -1,5 +1,10 @@
 'use strict';
 
+/**
+ * sender to a channel
+ * @function sender
+ * @param {object} data - object to attempt to stringify
+*/
 const sender = function(data) {
   try {
     return JSON.stringify(data);

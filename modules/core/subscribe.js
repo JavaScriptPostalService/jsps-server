@@ -1,6 +1,13 @@
 'use strict';
 
-// Save the connected socket to the subscribers under the channel with the key of client
+/**
+ * Subscribe to a channel or ~group~
+ * @function subscribe
+ * @param {string} channel - the channel to subscribe to
+ * @param {object} payload - the payload containing subscription info
+ * @param {object} channels - List of all channels
+ * @callback {function} cb - callback to send payloads to
+*/
 const subscribe = function(channel, payload, channels, cb) {
   let nch = channels;
 

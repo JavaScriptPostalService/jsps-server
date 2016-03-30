@@ -2,7 +2,14 @@
 
 const {sender} = require('../tools');
 
-const clients = function(payload, channels) {
+/**
+ * info about a channel or ~group~
+ * @function info
+ * @param {object} payload - the payload containing subscription info
+ * @param {object} channels - List of all channels
+ * @callback {function} cb - callback to send confirmation to
+*/
+const info = function(payload, channels) {
   let dispatcher = () => {
     let clients = []; // This will be populated with all users.
     let ch = channels[payload.channel];
@@ -48,4 +55,4 @@ const clients = function(payload, channels) {
   }
 };
 
-module.exports = clients;
+module.exports = info;

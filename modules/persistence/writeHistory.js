@@ -1,6 +1,12 @@
 'use strict';
 
-const writeHistory = function(channel, payload) {
+/**
+ * writeHistory to a channel
+ * @function writeHistory
+ * @param {string} channel - the name of the channel to write history to
+ * @param {object} payload - the payload to write to history
+*/
+const writeHistory = function(channel, payload, privateKey) {
   // should write the payload to the database, payload contains data like the
   // message, who sent it, and more. channel is channel obviously.
 };

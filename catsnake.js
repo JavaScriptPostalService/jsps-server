@@ -16,9 +16,16 @@ app.ws.use(route.all('/', function* (next) {
   this.websocket.on('message', data => {
     let message = JSON.parse(data);
     switch (message.metadata.type) {
-      // If a channel doesn't exist, one will be created. If a privateKey is
-      // provided this will need to be passed to all publishers.
+
       case 'subscribe':
+        /**
+         * Subscribe to a channel or ~group~
+         * @function subscribe
+         * @param {string} channel - the channel to subscribe to
+         * @param {object} payload - the payload containing subscription info
+         * @param {object} channels - List of all channels
+         * @callback {function} cb - callback to send payloads to
+        */
         subscribe(message.channel, {
           client: message.metadata.client,
           commonName: (message.metadata.commonName) ?
@@ -31,9 +38,15 @@ app.ws.use(route.all('/', function* (next) {
         });
         break;
 
-      // TODO: make this actually work.
-      // Leave a channel.
       case 'unsubscribe':
+        /**
+         * Unsubscribe from a channel or ~group~
+         * @function unsubscribe
+         * @param {string} channel - the channel to unsubscribe from
+         * @param {object} payload - the payload containing subscription info
+         * @param {channels} object - List of all channels
+         * @callback {function} cb - callback to send confirmation to
+        */
         unsubscribe(message.channel, {
           client: message.metadata.client,
           socket: this.websocket
@@ -42,17 +55,34 @@ app.ws.use(route.all('/', function* (next) {
         });
         break;
 
-      // If a channel doesn't exist, nothing will be published. If a privateKey
-      // is provided this will need to be passed to all publishers.
       case 'publish':
+        /**
+         * Publishes a payload to all subscribers
+         * @function publish
+         * @param {object} payload - the payload to publish to subscribers
+         * @param {channels} object - List of all channels
+        */
         publish(message, channels);
         break;
 
       case 'info':
+        /**
+         * info about a channel or ~group~
+         * @function info
+         * @param {object} payload - the payload containing subscription info
+         * @param {object} channels - List of all channels
+         * @callback {function} cb - callback to send confirmation to
+        */
         info(message, channels);
         break;
 
       case 'history':
+        /**
+         * history from a channel
+         * @function history
+         * @param {string} channel - the name of the channel to pull history from
+         * @param {number} limit - the maximum number of payloads to pull from history
+        */
         console.log('got history', message);
         break;
 
