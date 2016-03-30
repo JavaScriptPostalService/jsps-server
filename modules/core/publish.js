@@ -16,7 +16,12 @@ const publish = function(payload, channels) {
   let commonName = payload.metadata.commonName;
   let time = payload.metadata.time;
 
-  // persistence
+  /**
+   * writeHistory to a channel
+   * @function writeHistory
+   * @param {string} channel - the name of the channel to write history to
+   * @param {object} payload - the payload to write to history
+  */
   writeHistory(channel, payload, privateKey);
 
   let next = () => {
