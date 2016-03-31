@@ -12,8 +12,45 @@ const Channel = mongo.model('Channel');
  * @param {object} payload - the payload to write to history
 */
 const writeHistory = function(channel, payload, privateKey) {
-  // should write the payload to the database, payload contains data like the
-  // message, who sent it, and more. channel is channel obviously.
+  let lookup = Channel.find({name: channel});
+  lookup.findOne((err, ch) => {
+    if (err) {
+      console.warn('Something went wrong in writeHistory', err);
+    }
+
+    if (ch) {
+      if (ch.privateKey) {
+        if (privateKey === ch.privateKey) {
+          ch.payloads.push(payload);
+          ch.save(err => {
+            if (err) {
+              console.warn('Something went wrong in writeHistory', err);
+            }
+          });
+        }
+      } else {
+        ch.payloads.push(payload);
+        ch.save(err => {
+          if (err) {
+            console.warn('Something went wrong in writeHistory', err);
+          }
+        });
+      }
+    } else {
+      let hist = new Channel({
+        registeredAt: Date.now(),
+        owner: payload.metadata.client,
+        name: channel,
+        privateKey: (privateKey) ? privateKey : false,
+        payloads: [payload]
+      });
+      hist.save(err => {
+        if (err) {
+          console.warn('Something went wrong in writeHistory', err);
+        }
+      });
+    }
+  });
 };
 
 module.exports = writeHistory;

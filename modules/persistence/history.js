@@ -1,5 +1,11 @@
 'use strict';
 
+
+const mongo = require('mongoose');
+
+// This is defined in /modules/mongo/init.js
+const Channel = mongo.model('Channel');
+
 /**
  * history from a channel
  * @function history
@@ -7,8 +13,16 @@
  * @param {number} limit - the maximum number of payloads to pull from history
 */
 const history = function(channel, limit) {
-  // should return the last x payloads from the database where channel is the
-  // channel arg and x is limit
+  let lookup = Channel.find({name: channel});
+  lookup.findOne((err, ch) => {
+    if (err) {
+      console.warn('Something went wrong in writeHistory', err);
+    } else {
+      if (ch) {
+
+      }
+    }
+  });
 };
 
 module.exports = history;
