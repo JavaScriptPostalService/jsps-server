@@ -9,6 +9,7 @@ const websockify = require('koa-websocket');
 const app = websockify(koa());
 
 const {sender, publish, subscribe, unsubscribe, info} = require('./modules/core');
+const {history} = require('./modules/persistence');
 
 // TODO: this should be loaded from the DB instead, right now all channels are
 // lost on each restart / crash of catsnake-server
@@ -86,7 +87,13 @@ app.ws.use(route.all('/', function* (next) {
          * @param {string} channel - the name of the channel to pull history from
          * @param {number} limit - the maximum number of payloads to pull from history
         */
-        console.log('got history', message);
+        history(
+          message.channel,
+          message.limit,
+          message.privateKey,
+          channels,
+          message.metadata.client
+        );
         break;
 
       default:
