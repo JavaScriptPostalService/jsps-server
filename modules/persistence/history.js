@@ -12,7 +12,7 @@ const history = function(channel, limit, privateKey, channels, client) {
   // This is defined in /modules/mongo/init.js
   const Channel = mongo.model('Channel');
 
-  const publish = require('../core/publish');
+  const message = require('../core/message');
 
   let lookup = Channel.find({name: channel});
   lookup.findOne((err, ch) => {
@@ -21,7 +21,7 @@ const history = function(channel, limit, privateKey, channels, client) {
     } else {
       if (ch) {
         let send = (pk) => {
-          publish({
+          message({
             history: ch.payloads.slice(-limit),
             privateKey: (pk) ? pk : false,
             channel: channel,
@@ -30,7 +30,7 @@ const history = function(channel, limit, privateKey, channels, client) {
               requester: client,
               type: 'history'
             }
-          }, channels, true);
+          }, channels);
         };
 
         if (ch.privateKey) {
