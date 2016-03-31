@@ -1,5 +1,7 @@
 'use strict';
 
+require('./modules/mongo/init.js');
+
 const koa = require('koa');
 const route = require('koa-route');
 const websockify = require('koa-websocket');
@@ -8,7 +10,8 @@ const app = websockify(koa());
 
 const {sender, publish, subscribe, unsubscribe, info} = require('./modules/core');
 
-// TODO: make this bettar
+// TODO: this should be loaded from the DB instead, right now all channels are
+// lost on each restart / crash of catsnake-server
 let channels = {};
 
 // Note it's app.ws.use and not app.use

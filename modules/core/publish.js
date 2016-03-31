@@ -1,4 +1,5 @@
 'use strict';
+
 const {sender} = require('../tools');
 const {writeHistory} = require('../persistence');
 

@@ -24,6 +24,7 @@
     "koa": "^1.2.0",
     "koa-route": "^2.4.2",
     "koa-websocket": "^1.1.0",
+    "mongoose": "^4.4.10",
     "uuid": "^2.0.1"
   }
 }
