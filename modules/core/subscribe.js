@@ -24,13 +24,10 @@ const subscribe = function(channel, payload, channels, cb) {
     cb(nch);
   };
 
-  if (payload.privateKey && !nch[channel]) {
+  if (!nch[channel]) {
     nch[channel] = {
-      privateKey: payload.privateKey,
-      subscribers: {}
-    };
-  } else if (!nch[channel]) {
-    nch[channel] = {
+      privateKey: (payload.privateKey) ? payload.privateKey : false,
+      secret: (payload.secret) ? payload.secret : false,
       subscribers: {}
     };
   }

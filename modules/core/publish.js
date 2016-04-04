@@ -12,6 +12,7 @@ const {writeHistory} = require('../persistence');
 const publish = function(payload, channels) {
   let channel = payload.channel;
   let privateKey = payload.privateKey;
+  let secret = payload.secret;
   let data = payload.payload;
   let client = payload.metadata.client;
   let commonName = payload.metadata.commonName;
@@ -23,7 +24,10 @@ const publish = function(payload, channels) {
    * @param {string} channel - the name of the channel to write history to
    * @param {object} payload - the payload to write to history
   */
-  writeHistory(channel, payload, privateKey);
+  writeHistory(channel, payload, {
+    privateKey,
+    secret
+  });
 
   let next = () => {
     let ch = channels[channel];

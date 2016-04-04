@@ -11,7 +11,7 @@ const Channel = mongo.model('Channel');
  * @param {string} channel - the name of the channel to write history to
  * @param {object} payload - the payload to write to history
 */
-const writeHistory = function(channel, payload, privateKey) {
+const writeHistory = function(channel, payload, opts) {
   let lookup = Channel.find({name: channel});
   lookup.findOne((err, ch) => {
     if (err) {
@@ -20,7 +20,7 @@ const writeHistory = function(channel, payload, privateKey) {
 
     if (ch) {
       if (ch.privateKey) {
-        if (privateKey === ch.privateKey) {
+        if (opts.privateKey === ch.privateKey) {
           ch.payloads.push(payload);
           ch.save(err => {
             if (err) {
@@ -41,7 +41,8 @@ const writeHistory = function(channel, payload, privateKey) {
         registeredAt: Date.now(),
         owner: payload.metadata.client,
         name: channel,
-        privateKey: (privateKey) ? privateKey : false,
+        privateKey: (opts.privateKey) ? opts.privateKey : false,
+        secret: (opts.secret) ? opts.secret : false,
         payloads: [payload]
       });
       hist.save(err => {
