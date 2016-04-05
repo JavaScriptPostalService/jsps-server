@@ -9,7 +9,7 @@
  * @callback {function} cb - callback to send payloads to
 */
 const subscribe = function(channel, payload, channels, cb) {
-  console.log(payload);
+
   let nch = channels;
 
   let dispatcher = () => {
