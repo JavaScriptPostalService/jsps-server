@@ -61,12 +61,26 @@ const publish = function(payload, channels) {
     });
   };
 
-  if (channels[channel]) {
-    if (channels[channel].privateKey) {
-      if (privateKey === channels[channel].privateKey) {
-        next();
+  // If the channel has a private key...
+  if (channels[channel].privateKey) {
+    // ...make sure the provided key matches
+    if (privateKey === channels[channel].privateKey) {
+      // If the channel is invite only...
+      if (channels[channel].private) {
+        // ...make sure the client is on the granted list
+        if (channels[channel].grant.indexOf(client) > -1) {
+          next();
+        }
+      } else {
+        // make sure the user is not blocked from this channel
+        if (channels[channel].deny.indexOf(client) === -1) {
+          next();
+        }
       }
-    } else {
+    }
+  } else {
+    // make sure the user is not blocked from this channel
+    if (channels[channel].deny.indexOf(client) === -1) {
       next();
     }
   }

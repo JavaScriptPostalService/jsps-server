@@ -8,7 +8,11 @@ const channel = mongo.Schema({
   name: String,
   owner: String,
   privateKey: Boolean,
-  payloads: Array
+  payloads: Array,
+  private: Boolean,
+  secret: String,
+  denied: Array,
+  granted: Array
 });
 
 mongo.model('Channel', channel);

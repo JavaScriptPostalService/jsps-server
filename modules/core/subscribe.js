@@ -28,16 +28,32 @@ const subscribe = function(channel, payload, channels, cb) {
     nch[channel] = {
       privateKey: (payload.privateKey) ? payload.privateKey : false,
       secret: (payload.secret) ? payload.secret : false,
+      private: (payload.private) ? payload.private : false,
       subscribers: {}
     };
   }
 
   if (nch[channel].privateKey) {
+    // If the channel has a private key, make sure the provided key matches
     if (payload.privateKey === nch[channel].privateKey) {
-      dispatcher();
+      // If the channel is invite only...
+      if (nch[channel].private) {
+        // ...make sure the client is on the granted list
+        if (nch[channel].grant.indexOf(payload.client) > -1) {
+          dispatcher();
+        }
+      } else {
+        // make sure the user is not blocked from this channel
+        if (nch[channel].deny.indexOf(payload.client) === -1) {
+          dispatcher();
+        }
+      }
     }
   } else {
-    dispatcher();
+    // make sure the user is not blocked from this channel
+    if (nch[channel].deny.indexOf(payload.client) === -1) {
+      dispatcher();
+    }
   }
 
   // TODO: make this actually remove the subscriber when the connection is terminated.

@@ -6,6 +6,8 @@ const subscribe = require('./subscribe');
 const unsubscribe = require('./unsubscribe');
 const info = require('./info');
 const channelLoader = require('./channelLoader');
+const grant = require('./grant');
+const deny = require('./deny');
 
 module.exports = {
   publish,
@@ -13,5 +15,7 @@ module.exports = {
   subscribe,
   unsubscribe,
   info,
-  channelLoader
+  channelLoader,
+  grant,
+  deny
 };
