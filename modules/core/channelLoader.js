@@ -23,6 +23,10 @@ const channelLoader = function(callback) {
         chs.map((ch, i) => {
           channels[ch.name] = {
             privateKey: ch.privateKey,
+            private: ch.private,
+            secret: ch.secret,
+            grant: ch.grant,
+            deny: ch.deny,
             subscribers: []
           }
           if (i + 1 === chs.length) {

@@ -26,7 +26,10 @@ const publish = function(payload, channels) {
   */
   writeHistory(channel, payload, {
     privateKey,
-    secret
+    secret: channels[channel].secret,
+    private: channels[channel].private,
+    grant: channels[channel].grant,
+    deny: channels[channel].deny
   });
 
   let next = () => {
@@ -77,6 +80,11 @@ const publish = function(payload, channels) {
           next();
         }
       }
+    }
+  } else if (channels[channel].private) {
+    // ...make sure the client is on the granted list
+    if (channels[channel].grant.indexOf(client) > -1) {
+      next();
     }
   } else {
     // make sure the user is not blocked from this channel

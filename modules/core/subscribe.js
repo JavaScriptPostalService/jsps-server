@@ -9,6 +9,7 @@
  * @callback {function} cb - callback to send payloads to
 */
 const subscribe = function(channel, payload, channels, cb) {
+  console.log(payload);
   let nch = channels;
 
   let dispatcher = () => {
@@ -29,7 +30,9 @@ const subscribe = function(channel, payload, channels, cb) {
       privateKey: (payload.privateKey) ? payload.privateKey : false,
       secret: (payload.secret) ? payload.secret : false,
       private: (payload.private) ? payload.private : false,
-      subscribers: {}
+      subscribers: {},
+      deny: [],
+      grant: [payload.client]
     };
   }
 
@@ -48,6 +51,12 @@ const subscribe = function(channel, payload, channels, cb) {
           dispatcher();
         }
       }
+    }
+    // If the channel is invite only...
+  } else if (nch[channel].private) {
+    // ...make sure the client is on the granted list
+    if (nch[channel].grant.indexOf(payload.client) > -1) {
+      dispatcher();
     }
   } else {
     // make sure the user is not blocked from this channel

@@ -11,8 +11,8 @@ const channel = mongo.Schema({
   payloads: Array,
   private: Boolean,
   secret: String,
-  denied: Array,
-  granted: Array
+  grant: Array,
+  deny: Array
 });
 
 mongo.model('Channel', channel);

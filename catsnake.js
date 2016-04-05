@@ -46,6 +46,14 @@ channelLoader(ch => {
               message.metadata.commonName : 'Anonymous',
             privateKey: (message.privateKey) ?
               message.privateKey : false,
+            secret: (message.secret) ?
+              message.secret : false,
+            noself: (message.noself) ?
+              message.noself : false,
+            silent: (message.silent) ?
+              message.silent : false,
+            private: (message.private) ?
+              message.private : false,
             socket: this.websocket
           }, channels, nch => {
             channels = Object.assign({}, channels, nch);

@@ -43,6 +43,9 @@ const writeHistory = function(channel, payload, opts) {
         name: channel,
         privateKey: (opts.privateKey) ? opts.privateKey : false,
         secret: (opts.secret) ? opts.secret : false,
+        grant: (opts.grant) ? opts.grant : false,
+        deny: (opts.deny) ? opts.deny : false,
+        private: (opts.private) ? opts.private : false,
         payloads: [payload]
       });
       hist.save(err => {
