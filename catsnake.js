@@ -17,6 +17,8 @@ const {
   channelLoader
 } = require('./modules/core');
 
+const msgpack = require("msgpack-lite");
+
 const {history} = require('./modules/persistence');
 
 // TODO: this should be loaded from the DB instead, right now all channels are
@@ -28,7 +30,8 @@ channelLoader(ch => {
   // Note it's app.ws.use and not app.use
   app.ws.use(route.all('/', function* (next) {
     this.websocket.on('message', data => {
-      let message = JSON.parse(data);
+      let message = msgpack.decode(data);
+
       switch (message.metadata.type) {
 
         case 'subscribe':
