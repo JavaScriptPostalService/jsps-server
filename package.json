@@ -1,6 +1,6 @@
 {
   "name": "catsnake-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CatSnake JS - Free, and simple to use JavaScript messaging for building realtime applications.",
   "main": "catsnake.js",
   "scripts": {
