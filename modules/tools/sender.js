@@ -9,7 +9,8 @@ const msgpack = require("msgpack-lite");
 */
 const sender = function(data) {
   try {
-    return msgpack.encode(data);
+    return JSON.stringify(data);
+//    return msgpack.encode(data);
   } catch (e) {
     return JSON.stringify({
       error: 'server attempted to send invalid data to client.'
