@@ -30,9 +30,8 @@ channelLoader(ch => {
   // Note it's app.ws.use and not app.use
   app.ws.use(route.all('/', function* (next) {
     this.websocket.on('message', data => {
-      //let message = msgpack.decode(data);
-      let message = JSON.parse(data);
-      
+      let message = msgpack.decode(data);
+
       switch (message.metadata.type) {
 
         case 'subscribe':
