@@ -1,6 +1,6 @@
 {
   "name": "catsnake-server",
-  "version": "0.2.0",
+  "version": "0.2.4",
   "description": "Super fast, and easy to use; realtime messaging.",
   "main": "catsnake.js",
   "scripts": {
