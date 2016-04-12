@@ -9,7 +9,7 @@ const {writeHistory} = require('../persistence');
  * @param {object} payload - the payload to publish to subscribers
  * @param {channels} object - List of all channels
 */
-const publish = function(payload, channels) {
+const publish = function(payload, channels, callback) {
   let channel = payload.channel;
   let privateKey = payload.privateKey;
   let secret = payload.secret;
@@ -36,6 +36,8 @@ const publish = function(payload, channels) {
 
   let next = () => {
     let ch = channels[channel];
+
+    callback();
 
     Object.keys(ch.subscribers).map((value, index) => {
       // This is required because closing sockets do not yet remove them from the

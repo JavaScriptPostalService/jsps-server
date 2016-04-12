@@ -11,13 +11,14 @@ const websockify = require('koa-websocket');
 const app = websockify(koa());
 
 const {
-  sender,
   publish,
   subscribe,
   unsubscribe,
   info,
   channelLoader
 } = require('./modules/core');
+
+const {sender} = require('./modules/tools');
 
 const msgpack = require("msgpack-lite");
 
@@ -92,7 +93,17 @@ channelLoader(ch => {
              * @param {object} payload - the payload to publish to subscribers
              * @param {channels} object - List of all channels
             */
-            publish(message, channels);
+            publish(message, channels, () => {
+              this.websocket.send(
+                sender({
+                  helper: true,
+                  metadata: {
+                    type: 'helper',
+                    id: message.metadata.id
+                  }
+                })
+              );
+            });
             break;
 
           case 'info':
