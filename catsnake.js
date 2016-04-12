@@ -94,6 +94,8 @@ channelLoader(ch => {
              * @param {channels} object - List of all channels
             */
             publish(message, channels, () => {
+              /* Disabled for now, will make a config value for immediate response
+               * the current method sends an extra message just to verify, this is slow
               this.websocket.send(
                 sender({
                   helper: true,
@@ -103,6 +105,7 @@ channelLoader(ch => {
                   }
                 })
               );
+              */
             });
             break;
 

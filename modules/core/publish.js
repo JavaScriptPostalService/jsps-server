@@ -55,6 +55,7 @@ const publish = function(payload, channels, callback) {
                   metadata: {
                     time,
                     type: 'publish',
+                    id: payload.metadata.id,
                     sender: commonName
                   }
                 })
