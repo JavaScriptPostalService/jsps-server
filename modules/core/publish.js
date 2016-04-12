@@ -24,13 +24,15 @@ const publish = function(payload, channels) {
    * @param {string} channel - the name of the channel to write history to
    * @param {object} payload - the payload to write to history
   */
-  writeHistory(channel, payload, {
-    privateKey,
-    secret: channels[channel].secret,
-    private: channels[channel].private,
-    grant: channels[channel].grant,
-    deny: channels[channel].deny
-  });
+  if (channel[channels]) {
+    writeHistory(channel, payload, {
+      privateKey,
+      secret: channels[channel].secret,
+      private: channels[channel].private,
+      grant: channels[channel].grant,
+      deny: channels[channel].deny
+    });
+  }
 
   let next = () => {
     let ch = channels[channel];
@@ -64,32 +66,34 @@ const publish = function(payload, channels) {
     });
   };
 
-  // If the channel has a private key...
-  if (channels[channel].privateKey) {
-    // ...make sure the provided key matches
-    if (privateKey === channels[channel].privateKey) {
-      // If the channel is invite only...
-      if (channels[channel].private) {
-        // ...make sure the client is on the granted list
-        if (channels[channel].grant.indexOf(client) > -1) {
-          next();
-        }
-      } else {
-        // make sure the user is not blocked from this channel
-        if (channels[channel].deny.indexOf(client) === -1) {
-          next();
+  if (channels[channel]) {
+    // If the channel has a private key...
+    if (channels[channel].privateKey) {
+      // ...make sure the provided key matches
+      if (privateKey === channels[channel].privateKey) {
+        // If the channel is invite only...
+        if (channels[channel].private) {
+          // ...make sure the client is on the granted list
+          if (channels[channel].grant.indexOf(client) > -1) {
+            next();
+          }
+        } else {
+          // make sure the user is not blocked from this channel
+          if (channels[channel].deny.indexOf(client) === -1) {
+            next();
+          }
         }
       }
-    }
-  } else if (channels[channel].private) {
-    // ...make sure the client is on the granted list
-    if (channels[channel].grant.indexOf(client) > -1) {
-      next();
-    }
-  } else {
-    // make sure the user is not blocked from this channel
-    if (channels[channel].deny.indexOf(client) === -1) {
-      next();
+    } else if (channels[channel].private) {
+      // ...make sure the client is on the granted list
+      if (channels[channel].grant.indexOf(client) > -1) {
+        next();
+      }
+    } else {
+      // make sure the user is not blocked from this channel
+      if (channels[channel].deny.indexOf(client) === -1) {
+        next();
+      }
     }
   }
 };
