@@ -24,7 +24,7 @@ const publish = function(payload, channels, callback) {
    * @param {string} channel - the name of the channel to write history to
    * @param {object} payload - the payload to write to history
   */
-  if (channel[channels]) {
+  if (channels[channel]) {
     writeHistory(channel, payload, {
       privateKey,
       secret: channels[channel].secret,
