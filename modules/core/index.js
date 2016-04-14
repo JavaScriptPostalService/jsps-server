@@ -8,6 +8,7 @@ const info = require('./info');
 const channelLoader = require('./channelLoader');
 const grant = require('./grant');
 const deny = require('./deny');
+const channelLister = require('./channelLister');
 
 module.exports = {
   publish,
@@ -17,5 +18,6 @@ module.exports = {
   info,
   channelLoader,
   grant,
-  deny
+  deny,
+  channelLister
 };

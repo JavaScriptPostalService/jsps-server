@@ -15,7 +15,10 @@ const {
   subscribe,
   unsubscribe,
   info,
-  channelLoader
+  channelLoader,
+  channelLister,
+  grant,
+  deny
 } = require('./modules/core');
 
 const {sender} = require('./modules/tools');
@@ -134,6 +137,58 @@ channelLoader(ch => {
               channels,
               message.metadata.client
             );
+            break;
+
+          case 'grant':
+            /**
+             * Grant a client access to a channel
+             * @function grant
+             * @param {string} channel - the channel to grant access to
+             * @param {object} payload - the payload containing grant info
+             * @param {object} channels - List of all channels
+             * @callback {function} cb - callback to send payloads to
+            */
+            grant(
+              message.channel,
+              message,
+              channels,
+              message.metadata.client,
+              nch => {
+                channels = Object.assign({}, channels, nch);
+              }
+            );
+            break;
+
+          case 'deny':
+            /**
+             * Deny a client access to a channel
+             * @function deny
+             * @param {string} channel - the channel to deny access to
+             * @param {object} payload - the payload containing grant info
+             * @param {object} channels - List of all channels
+             * @callback {function} cb - callback to send payloads to
+            */
+            deny(
+              message.channel,
+              message,
+              channels,
+              message.metadata.client,
+              nch => {
+                channels = Object.assign({}, channels, nch);
+              }
+            );
+            break;
+
+
+          case 'channels':
+            /**
+             * get a list of all channels, for administrative use
+             * @function channels
+             * @param {object} payload - the payload containing request
+             * @param {object} socket - Socket to send channel data to
+             * @param {object} channels - List of all channels
+            */
+            channelLister(message, this.websocket, channels);
             break;
 
           default:
