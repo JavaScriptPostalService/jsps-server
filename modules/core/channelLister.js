@@ -24,6 +24,7 @@ const channelLister = function(payload, socket, chs) {
               metadata: {
                 time: Date.now(),
                 type: 'channels',
+                id: payload.metadata.id,
                 requester: payload.metadata.commonName
               }
             })
